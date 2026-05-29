@@ -83,6 +83,9 @@ const LandingPage = () => {
     { brand: 'U.S. POLO ASSN.', desc: 'Striped Collar Solid Polo Shirt', price: '1259.30', oldPrice: '1799.00', discount: '30% Off', img: GreenShirtman }
   ];
 
+  const { addToCart } = useWishlist();
+  const { addToCartFromLanding } = useWishlist();
+
   return (
     <Box sx={{ width: '100%', overflowX: 'hidden', bgcolor: '#ffffff', marginTop: '' }}>
 
@@ -191,7 +194,7 @@ const LandingPage = () => {
                   <Box sx={{ height: 220, backgroundImage: `url(${card.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                   <Typography sx={{ color: '#000000', fontWeight: 800, fontSize: '0.75rem', mt: 1.5 }}>{card.desc}</Typography>
                   <Typography sx={{ color: '#666666', fontSize: '0.7rem', mb: 1.5 }}>{card.title}</Typography>
-                  <Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.65rem', borderRadius: '0px' }}>SHOP NOW</Button>
+                  <Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.65rem', borderRadius: '0px' }} onClick={() => addToCartFromLanding(card)} >SHOP NOW</Button>
                 </Box>
               ))}
             </Box>
@@ -283,38 +286,6 @@ const LandingPage = () => {
         </Container>
       </Box>
 
-      {/* 9. "FEATURED PRODUCTS" STANDARD LISTING GRID (image_560b40.jpg Reference) */}
-      {/* <Container maxWidth="xl" sx={{ mb: 8 }}>
-        <Typography sx={sectionTitleStyle}>Featured Products</Typography>
-        <Grid container spacing={3}>
-          {[
-            { brand: 'FLYING MACHINE', desc: 'Slash Slim Tapered Stone Wash', price: '1487.38', oldPrice: '2399.00', discount: '38% Off', img: Flying },
-            { brand: 'FLYING MACHINE', desc: 'Mid Rise Bootcut Jeans', price: '1797.38', oldPrice: '2899.00', discount: '38% Off', img: BlackSmartBoy },
-            { brand: 'ARROW', desc: 'Cotton Linen Slim Fit Shirt', price: '1699.32', oldPrice: '2499.00', discount: '32% Off', img: SmartBot },
-            { brand: 'U.S. POLO ASSN. WOMEN', desc: 'High Rise Wide Leg Cut & Sew', price: '2024.25', oldPrice: '2699.00', discount: '25% Off', img: WhiteandBlue },
-            { brand: 'U.S. POLO ASSN.', desc: 'Striped Collar Solid Polo Shirt', price: '1259.30', oldPrice: '1799.00', discount: '30% Off', img: GreenShirtman }
-          ].map((prod, idx) => (
-            <Grid item xs={12} sm={6} md={2.4} key={idx}>
-              <Card sx={{ boxShadow: 'none', border: '1px solid #e0e0e0', position: 'relative', '&:hover .quick-add': { opacity: 1 } }}>
-                <IconButton sx={{ position: 'absolute', top: 10, right: 10, zIndex: 2, bgcolor: 'rgba(255,255,255,0.7)' }}>
-                  <FavoriteBorderIcon fontSize="small" />
-                </IconButton>
-                <CardMedia component="img" height="280" image={prod.img} alt="product" />
-                <CardContent sx={{ p: 2 }}>
-                  <Typography sx={{ fontWeight: 800, fontSize: '0.85rem' }}>{prod.brand}</Typography>
-                  <Typography noWrap sx={{ color: '#666666', fontSize: '0.75rem', mb: 1 }}>{prod.desc}</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography sx={{ fontWeight: 800, fontSize: '0.9rem' }}>₹{prod.price}</Typography>
-                    <Typography sx={{ textDecoration: 'line-through', color: '#999999', fontSize: '0.75rem' }}>₹{prod.oldPrice}</Typography>
-                    <Typography sx={{ color: '#dc2626', fontWeight: 700, fontSize: '0.75rem' }}>{prod.discount}</Typography>
-                  </Box>
-                  <Chip label="Buy 1 Get 1" size="small" sx={{ mt: 1, bgcolor: '#000000', color: '#ffffff', borderRadius: '4px', fontSize: '0.65rem', height: 20 }} />
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container> */}
       <Container maxWidth="xl" sx={{ mb: 8 }}>
       <Typography sx={sectionTitleStyle}>Featured Products</Typography>
       <Grid container spacing={3}>

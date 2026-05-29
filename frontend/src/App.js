@@ -264,14 +264,7 @@ function App() {
             <Footer />
           </>
         } />
-
-
-
-
-
-
-
-
+        
       </Routes>
     </Router>
     </WishlistProvider>

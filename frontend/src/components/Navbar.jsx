@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Badge, IconButton, Box, InputBase, Popover, Button, Divider} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -11,12 +10,11 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { Link } from 'react-router-dom';
 import { useWishlist } from './wishlistcontext';
 
-
 const Navbar = () => {
   const navigate = useNavigate();
-  const { wishlist } = useWishlist();
-  const { cartItems } = useSelector((state) => state.cart || { cartItems: [] });
-  const totalQuantity = cartItems ? cartItems.reduce((acc, curr) => acc + curr.quantity, 0) : 0;
+  
+  // Pulling both wishlist items and total cart quantity from your custom context hook
+  const { wishlist, totalQuantity } = useWishlist();
 
   // Popover Anchor State
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,11 +55,9 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5}}>
-
-
             <IconButton color="inherit" sx={{ color: '#4d4d4d' }} component={Link} to='/mapdirection'><LocationOnOutlinedIcon /></IconButton>
 
-            {/* PROFILE CONTROLLER: Triggered strictly onClick */}
+            {/* PROFILE CONTROLLER */}
             <Box>
               <IconButton 
                 color="inherit" 
@@ -78,7 +74,7 @@ const Navbar = () => {
               <Popover
                 open={open}
                 anchorEl={anchorEl}
-                onClose={handlePopoverClose} // Closes automatically if you click outside the dropdown menu
+                onClose={handlePopoverClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                 slotProps={{
@@ -110,7 +106,7 @@ const Navbar = () => {
               </Popover>
             </Box>
 
-            <IconButton color="inherit" sx={{ color: '#4d4d4d', backgroundColor:"red" }} onClick={() => navigate('/wishlist')}  ><FavoriteBorderOutlinedIcon /></IconButton>
+            <IconButton color="inherit" sx={{ color: '#4d4d4d', backgroundColor:"red" }} onClick={() => navigate('/wishlist')}><FavoriteBorderOutlinedIcon /></IconButton>
             <IconButton onClick={() => navigate('/cart')} color="inherit" sx={{ color: '#4d4d4d' }}>
               <Badge badgeContent={totalQuantity} color="error" overlap="circular"><ShoppingBagOutlinedIcon /></Badge>
             </IconButton>

@@ -1,18 +1,17 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography, Button, Grid, Card, CardContent, IconButton, Divider } from '@mui/material';
-// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { removeFromCart } from '../store/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { useWishlist } from '../components/wishlistcontext'; // Use your Context file instead of Redux store
 
 const Cart = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.cart);
+  
+  // Pull states and actions out of your simple Context layer
+  const { cartItems, removeFromCartContext } = useWishlist();
 
-  // Compute mock frontend calculations for instant visual updates
-  const clientSubtotal = cartItems.reduce((acc, item) => acc + (item.product.currentPrice * item.quantity), 0);
+  // Flat price mapping calculation setup
+  const clientSubtotal = cartItems.reduce((acc, item) => acc + (item.currentPrice * item.quantity), 0);
   const shippingFee = clientSubtotal >= 999 || clientSubtotal === 0 ? 0 : 99;
   const clientTotal = clientSubtotal + shippingFee;
 
@@ -27,24 +26,25 @@ const Cart = () => {
         </Box>
       ) : (
         <Grid container spacing={4}>
-          {/* Active Product Listing Segment */}
           <Grid item xs={12} md={8}>
             {cartItems.map((item, index) => (
-              <Card key={`${item.product._id}-${item.size}`} sx={{ display: 'flex', mb: 2, boxShadow: 'none', border: '1px solid #f0f0f0' }}>
-                <Box component="img" src={item.product.images[0]} sx={{ width: 120, objectFit: 'cover' }} />
+              <Card key={index} sx={{ display: 'flex', mb: 2, boxShadow: 'none', border: '1px solid #f0f0f0' }}>
+                {/* Dynamically reads background fallback image or direct element url string */}
+                <Box component="img" src={item.img} sx={{ width: 120, objectFit: 'cover' }} />
+                
                 <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <Box>
-                    <Typography sx={{ fontWeight: 'bold' }}>{item.product.brand}</Typography>
-                    <Typography variant="body2" color="text.secondary">{item.product.title}</Typography>
+                    <Typography sx={{ fontWeight: 'bold' }}>Value Finds</Typography>
+                    <Typography variant="body2" color="text.secondary">{item.title}</Typography>
                     <Typography variant="caption" sx={{ display: 'block', mt: 0.5 }}>
                       Size: <strong>{item.size}</strong> | Qty: <strong>{item.quantity}</strong>
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                     <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                      ₹{item.product.currentPrice * item.quantity}
+                      ₹{item.currentPrice * item.quantity}
                     </Typography>
-                    <IconButton color="error" size="small" onClick={() => dispatch(removeFromCart(index))}>
+                    <IconButton color="error" size="small" onClick={() => removeFromCartContext(index)}>
                       <DeleteOutlineIcon />
                     </IconButton>
                   </Box>
@@ -53,7 +53,7 @@ const Cart = () => {
             ))}
           </Grid>
 
-          {/* Checkout Operational Breakdown Calculation Column */}
+          {/* Checkout Operational Summary Sidebars */}
           <Grid item xs={12} md={4}>
             <Card sx={{ boxShadow: 'none', border: '1px solid #f0f0f0', bgcolor: '#fafafa', p: 1 }}>
               <CardContent>
@@ -89,4 +89,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart; 
