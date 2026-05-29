@@ -23,7 +23,7 @@ Update `backend/.env` with your settings:
 
 #### Option A: Using Gmail (Recommended for testing)
 ```
-MONGO_URI=mongodb+srv://ecommerceapp:test123@ecommerce.2gbmnu3.mongodb.net/?appName=Ecommerce
+MONGO_URI=
 PORT=5000
 JWT_SECRET=your_super_secret_jwt_key_123
 JWT_EXPIRE=7d
@@ -40,7 +40,7 @@ NODE_ENV=development
 ```
 
 **How to get Gmail App Password:**
-1. Go to https://myaccount.google.com/security
+1. google
 2. Enable "2-Step Verification"
 3. Go to "App passwords" (at the bottom)
 4. Select "Mail" and "Windows Computer"
