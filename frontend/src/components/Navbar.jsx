@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Badge, IconButton, Box, InputBase, Popover, Button, Divider} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -9,22 +8,18 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { Link } from 'react-router-dom';
 import { useWishlist } from './wishlistcontext';
+import Logo from '../assets/zmart.png'
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  
-  // Pulling both wishlist items and total cart quantity from your custom context hook
-  const { wishlist, totalQuantity } = useWishlist();
 
-  // Popover Anchor State
+  const navigate = useNavigate();
+  const { wishlist, totalQuantity } = useWishlist();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  // Opens the popover on click
   const handleProfileClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // Closes the popover
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
@@ -43,10 +38,21 @@ const Navbar = () => {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: 'white', boxShadow: 'none', borderBottom: '1px solid #e0e0e0', px: { xs: 2, md: 6 } }}>
       <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 70 }}>
-        
-        <Typography variant="h4" onClick={() => navigate('/')} sx={{ fontWeight: 500, color: '#dc2626', cursor: 'pointer', textTransform: 'lowercase' }}>
-          z-mart
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box 
+            component="img"
+            src={Logo} 
+            alt="logoimage" 
+            onClick={() => navigate('/')} 
+            sx={{ 
+              height: '800px', 
+              width: '150px',
+              maxHeight: '100px',
+              cursor: 'pointer', 
+              objectFit: 'contain'
+            }}
+          />
+        </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 3 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid #b3b3b3', borderRadius: '50px', px: 2, py: 0.5, width: { xs: '150px', sm: '250px', md: '320px' } }}>
@@ -56,8 +62,6 @@ const Navbar = () => {
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5}}>
             <IconButton color="inherit" sx={{ color: '#4d4d4d' }} component={Link} to='/mapdirection'><LocationOnOutlinedIcon /></IconButton>
-
-            {/* PROFILE CONTROLLER */}
             <Box>
               <IconButton 
                 color="inherit" 
@@ -70,7 +74,6 @@ const Navbar = () => {
               >
                 <PersonOutlineOutlinedIcon />
               </IconButton>
-
               <Popover
                 open={open}
                 anchorEl={anchorEl}
@@ -105,7 +108,6 @@ const Navbar = () => {
                 <Typography sx={menuLinkStyle}>Coupons</Typography>
               </Popover>
             </Box>
-
             <IconButton color="inherit" sx={{ color: '#4d4d4d', backgroundColor:"red" }} onClick={() => navigate('/wishlist')}><FavoriteBorderOutlinedIcon /></IconButton>
             <IconButton onClick={() => navigate('/cart')} color="inherit" sx={{ color: '#4d4d4d' }}>
               <Badge badgeContent={totalQuantity} color="error" overlap="circular"><ShoppingBagOutlinedIcon /></Badge>
