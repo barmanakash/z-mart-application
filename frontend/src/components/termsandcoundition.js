@@ -26,7 +26,7 @@ function TermsAndConditions() {
                             Guidelines) Rules, 2011, which mandates the publication of the rules and regulations, privacy
                             policy, and terms of use for access or usage of the{' '}
                             <a href="https://www.localhot:3000.com" style={{ color: '#1976d2', textDecoration: 'none' }}>
-                                www.megamartfashions.com
+                                www.zmart.com
                             </a>{' '}
                             website.
                         </Typography>
@@ -34,7 +34,7 @@ function TermsAndConditions() {
                         <Typography variant="body1" color="text.secondary" align="justify">
                             The domain name{' '}
                             <a href="https://www.localhost:3000.com" style={{ color: '#1976d2', textDecoration: 'none' }}>
-                                www.megamartfashions.com
+                                www.zmart.com
                             </a>{' '}
                             (hereinafter referred to as the "Website") is owned by Megamart Lifestyle Brands Limited, a
                             company incorporated under the Companies Act, 1956, with its registered office located at Naroda

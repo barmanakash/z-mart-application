@@ -3,6 +3,8 @@ import { Box, Card, Typography, TextField, Button, Link, IconButton, Container, 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
+// import { Link } from 'react-router-dom';
+
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -352,17 +354,21 @@ const LoginPage = () => {
             {/* Legalese links */}
             <Typography variant="caption" align="center" sx={{ color: '#555555', display: 'block', mb: 4, mt: step === 'email' ? 2 : 3 }}>
               By proceeding, you agree to{' '}
-              <Link href="#" underline="always" sx={{ color: '#000000', fontWeight: 700 }}>Privacy Policy</Link>
-              {' '}|{' '}
-              <Link href="#" underline="always" sx={{ color: '#000000', fontWeight: 700 }}>T&C</Link>
+              <Link href="/privacypolicy" underline="always" sx={{ color: '#000000', fontWeight: 700 }}>Privacy Policy</Link>
+              <Link href="/termsandconditions" underline="always" sx={{ color: '#000000', fontWeight: 700 }}>T&C</Link>
             </Typography>
 
             {/* Social Oauth options - Only on email step */}
             {step === 'email' && (
               <>
+              <Box style={{display:"flex", justifyContent:"center", gap:"5px"}}>
+
                 <Typography variant="caption" align="center" sx={{ color: '#777777', display: 'block', mb: 2 }}>
-                  Or Log in with
+                  Log in with below Google and Facebook or
                 </Typography>
+                <Link href='/signuppage' variant="caption" align="center" sx={{ color: '#03041a', display: 'block', mb: 2,height:'20px', width:'50px', backgroundColor:"#46cd27", borderRadius:"4px", fontFamily:'serif',textDecoration: 'none',}}>sign up</Link>
+              </Box>
+                
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                   <IconButton 
                     sx={{ 

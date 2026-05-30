@@ -31,6 +31,7 @@ import Message from './components/message';
 import Wishlist from './components/wishlist';
 import { WishlistProvider } from './components/wishlistcontext';
 import AIChatbot from './components/aichatbot';
+import SignUp from './components/signup';
 
 function App() {
   return (
@@ -261,6 +262,15 @@ function App() {
             <>
               <container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }} >
                 <Wishlist />
+              </container>
+              <Footer />
+            </>
+          } />
+
+           <Route path='/signuppage' element={
+            <>
+              <container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }} >
+                <SignUp />
               </container>
               <Footer />
             </>
