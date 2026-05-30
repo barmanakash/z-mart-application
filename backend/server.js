@@ -7,6 +7,10 @@ const { initializeTransporter } = require('./config/emailConfig');
 // Load environment variables
 dotenv.config();
 
+console.log("=== ENV CHECK ===");
+console.log("JWT Secret Loaded:", process.env.JWT_SECRET); // Change JWT_SECRET to whatever variable name you are using
+console.log("=================");
+
 // Connect to MongoDB Atlas
 connectDB();
 

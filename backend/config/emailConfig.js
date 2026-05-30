@@ -53,7 +53,7 @@ const sendOTPEmail = async (email, otp) => {
     const mailTransporter = await initializeTransporter();
 
     const mailOptions = {
-      from: 'Megamart <noreply@megamart.com>',
+      from: 'Megamart <noreply@yopmail.com>',
       to: email,
       subject: 'Your Megamart OTP - Valid for 10 minutes',
       html: `

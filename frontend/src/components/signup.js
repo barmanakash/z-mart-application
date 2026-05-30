@@ -1,15 +1,86 @@
-import React from 'react';
-import { Box, styled, Typography, Grid, Button, TextField, Checkbox, FormControlLabel } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, styled, Typography, Grid, Button, TextField, Checkbox, FormControlLabel, Alert } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import XIcon from '@mui/icons-material/X';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 function SignUp() {
+    const navigate = useNavigate();
+    
+    // Form Input States
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
+
+    // Operational Feedback States
+    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSignupSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setMessage('');
+
+        // 1. Basic Frontend Fields Validations
+        if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+            setError('Please fill in all input fields.');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match!');
+            return;
+        }
+
+        if (!termsAccepted) {
+            setError('You must accept the terms of service and privacy policy to proceed.');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            // 2. Dispatch Payload to backend signup endpoint
+            const response = await axios.post(`${API_BASE_URL}/auth/signup`, {
+                name: name.trim(),
+                email: email.trim().toLowerCase(),
+                password: password,
+                confirmPassword: confirmPassword
+            });
+
+            if (response.data.success) {
+                setMessage('✅ Account registration successful! Redirecting to login page...');
+                
+                // Clear state fields
+                setName('');
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+                setTermsAccepted(false);
+
+                // 3. Navigation redirect to login route
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || 'An operational error occurred during registration.');
+            console.error('Signup submit handling error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const SignupPage = () => {
         return (
             <MainBox>
-                <Grid container sx={{ minHeight: '100vh', overflow: 'hidden', borderRadius:"100px" }}>
+                <Grid container sx={{ minHeight: '100vh', overflow: 'hidden', borderRadius: "100px" }}>
                     
                     {/* LEFT SIDE: Graphic Illustration Container */}
                     <ImageSection item xs={12} md={5.5}>
@@ -27,15 +98,27 @@ function SignUp() {
 
                     {/* RIGHT SIDE: Interactive Form Panel */}
                     <FormSection item xs={12} md={6.5}>
-                        <FormWrapper>
+                        <FormWrapper component="form" onSubmit={handleSignupSubmit}>
                             
                             {/* Greetings Section */}
                             <Typography variant="h5" sx={{ fontWeight: 500, color: '#334E68', mb: 0.5 }}>
                                 Hello ! Welcome Z-mart
                             </Typography>
-                            <Typography variant="body1" sx={{ color: '#486581', mb: 4, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <Typography variant="body1" sx={{ color: '#486581', mb: 3, display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                 We are Glad to see you 😊❤️
                             </Typography>
+
+                            {/* Status and Error Alert Blocks */}
+                            {error && (
+                                <Alert severity="error" sx={{ mb: 2, borderRadius: '8px' }}>
+                                    {error}
+                                </Alert>
+                            )}
+                            {message && (
+                                <Alert severity="success" sx={{ mb: 2, borderRadius: '8px' }}>
+                                    {message}
+                                </Alert>
+                            )}
 
                             {/* Third-Party Social Sign-Up Actions */}
                             <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -75,6 +158,9 @@ function SignUp() {
                                         fullWidth
                                         variant="outlined"
                                         placeholder="John Doe"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        disabled={loading}
                                     />
                                 </Grid>
                                 
@@ -84,6 +170,10 @@ function SignUp() {
                                         fullWidth
                                         variant="outlined"
                                         placeholder="example@email.com"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        disabled={loading}
                                     />
                                 </Grid>
 
@@ -93,6 +183,9 @@ function SignUp() {
                                         fullWidth
                                         type="password"
                                         variant="outlined"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        disabled={loading}
                                     />
                                 </Grid>
 
@@ -102,6 +195,9 @@ function SignUp() {
                                         fullWidth
                                         type="password"
                                         variant="outlined"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        disabled={loading}
                                     />
                                 </Grid>
                             </Grid>
@@ -111,6 +207,9 @@ function SignUp() {
                                 <FormControlLabel
                                     control={
                                         <Checkbox 
+                                            checked={termsAccepted}
+                                            onChange={(e) => setTermsAccepted(e.target.checked)}
+                                            disabled={loading}
                                             sx={{ 
                                                 color: '#BAC7D5',
                                                 '&.Mui-checked': { color: '#486581' },
@@ -127,8 +226,8 @@ function SignUp() {
                             </Box>
 
                             {/* Core Action Submission Control */}
-                            <SubmitButton variant="contained">
-                                Sign up
+                            <SubmitButton type="submit" variant="contained" disabled={loading}>
+                                {loading ? 'Signing up...' : 'Sign up'}
                             </SubmitButton>
 
                         </FormWrapper>
@@ -159,7 +258,7 @@ const MainBox = styled(Box)({
   width: "100%",
   minHeight: "100vh",
   borderRadius: "10px", 
-  overflow: "hidden" // Added this to enforce the border-radius clipping
+  overflow: "hidden"
 });
 
 const ImageSection = styled(Grid)({
@@ -266,5 +365,9 @@ const SubmitButton = styled(Button)({
     '&:hover': { 
         backgroundColor: '#EAE7E0', 
         boxShadow: 'none' 
+    },
+    '&:disabled': {
+        backgroundColor: '#EAE7E0',
+        color: '#A0AEC0'
     }
 });

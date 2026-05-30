@@ -108,7 +108,7 @@ const Navbar = () => {
                 <Typography sx={menuLinkStyle}>Coupons</Typography>
               </Popover>
             </Box>
-            <IconButton color="inherit" sx={{ color: '#4d4d4d', backgroundColor:"red" }} onClick={() => navigate('/wishlist')}><FavoriteBorderOutlinedIcon /></IconButton>
+            <IconButton color="inherit" sx={{ color: '#4d4d4d'}} onClick={() => navigate('/wishlist')}><FavoriteBorderOutlinedIcon /></IconButton>
             <IconButton onClick={() => navigate('/cart')} color="inherit" sx={{ color: '#4d4d4d' }}>
               <Badge badgeContent={totalQuantity} color="error" overlap="circular"><ShoppingBagOutlinedIcon /></Badge>
             </IconButton>
