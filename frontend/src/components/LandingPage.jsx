@@ -291,11 +291,15 @@ const LandingPage = () => {
           <Typography sx={[sectionTitleStyle, { color: '#ffffff' }]}>Hot Picks</Typography>
           <Grid container spacing={3} justifyContent="center">
             {[
-              { category: 'BRIEFS', img: 'image_560b23.jpg' },
-              { category: 'TRUNKS', img: 'image_560b23.jpg' },
-              { category: 'BELTS', img: 'image_560b23.jpg', clear: true },
-              { category: 'CAPS', img: 'image_560b23.jpg' },
-              { category: 'HANDBAGS', img: 'image_560b23.jpg' }
+              { category: 'BRIEFS', img: DressImage },
+              { category: 'TRUNKS', img: DressImageC },
+              { category: 'BELTS', img:  DressImageD, clear: true },
+              { category: 'CAPS', img:  DressImageG },
+              { category: 'HANDBAGS', img: DressImageE },
+              { category: 'HANDBAGS', img: DressImageE },
+              { category: 'CAPS', img:  DressImageG },
+              { category: 'CAPS', img:  DressImageG },
+              { category: 'CAPS', img:  DressImageG },
             ].map((item, index) => (
               <Grid item xs={6} sm={4} md={2.4} key={index}>
                 <Box
