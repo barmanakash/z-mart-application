@@ -86,6 +86,18 @@ const LandingPage = () => {
   const { addToCart } = useWishlist();
   const { addToCartFromLanding } = useWishlist();
 
+  // Generic handlers used by many SHOP NOW buttons
+  const handleShopNow = (product) => {
+    // product can be a minimal object; addToCartFromLanding will normalize
+    addToCartFromLanding(product);
+  };
+
+  // Buy 1 Get 1 handler — add two quantities of the product
+  const handleBuy1Get1 = (product) => {
+    addToCartFromLanding(product);
+    addToCartFromLanding(product);
+  };
+
   return (
     <Box sx={{ width: '100%', overflowX: 'hidden', bgcolor: '#ffffff', marginTop: '' }}>
 
@@ -140,13 +152,29 @@ const LandingPage = () => {
           <Grid item xs={12} md={4}>
             <Box sx={{ position: 'relative', height: 350, backgroundImage: `url(${Hardik})`, backgroundSize: 'cover', backgroundPosition: 'center', p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
               <Typography variant="h5" sx={{ fontWeight: 800, color: '#000000' }}>MIN. 30% OFF</Typography>
-              <Box sx={{ mt: 2 }}><Button variant="outlined" sx={pillButtonStyle}>SHOP NOW</Button></Box>
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  variant="outlined"
+                  sx={pillButtonStyle}
+                  onClick={() => handleShopNow({ title: 'MIN30 - Hardik', desc: 'MIN. 30% OFF', price: 1499, img: Hardik })}
+                >
+                  SHOP NOW
+                </Button>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={8}>
             <Box sx={{ position: 'relative', height: 350, backgroundImage: `url(${MenImage})`, backgroundSize: 'cover', backgroundPosition: 'center', p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: "Red" }}>
               <Typography variant="h3" sx={{ fontWeight: 900, color: '#000000', letterSpacing: '1px' }}>UP TO 55% OFF</Typography>
-              <Box sx={{ mt: 2 }}><Button variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', borderRadius: '50px', px: 4, py: 1, fontWeight: 700 }}>SHOP NOW</Button></Box>
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{ bgcolor: '#000000', color: '#ffffff', borderRadius: '50px', px: 4, py: 1, fontWeight: 700 }}
+                  onClick={() => handleShopNow({ title: 'UPTO55 - Men', desc: 'UP TO 55% OFF', price: 1999, img: MenImage })}
+                >
+                  SHOP NOW
+                </Button>
+              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -156,19 +184,31 @@ const LandingPage = () => {
           <Grid item xs={12} md={4}>
             <Box sx={{ height: 300, backgroundImage: `url(${Mantoo})`, backgroundSize: 'cover', backgroundPosition: 'center', p: 3, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', textAlign: 'center' }}>
               <Typography variant="h6" sx={{ fontWeight: 800, color: '#ffffff' }}>FLAT 40% OFF</Typography>
-              <Box sx={{ mb: 1 }}><Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }}>SHOP NOW</Button></Box>
+              <Box sx={{ mb: 1 }}>
+                <Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }} onClick={() => handleShopNow({ title: 'FLAT40 - BRIEFS', desc: 'FLAT 40% OFF', price: 1099, img: Mantoo })}>
+                  SHOP NOW
+                </Button>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={{ height: 300, backgroundImage: `url(${Manthree})`, backgroundSize: 'cover', backgroundPosition: 'center', p: 3, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', textAlign: 'center' }}>
               <Typography variant="h6" sx={{ fontWeight: 800, color: '#ffffff' }}>UP TO 50% OFF</Typography>
-              <Box sx={{ mb: 1 }}><Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }}>SHOP NOW</Button></Box>
+              <Box sx={{ mb: 1 }}>
+                <Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }} onClick={() => handleShopNow({ title: 'UPTO50 - JEANS', desc: 'UP TO 50% OFF', price: 1299, img: Manthree })}>
+                  SHOP NOW
+                </Button>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={{ height: 300, backgroundImage: `url(${ManFor})`, backgroundSize: 'cover', p: 3, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', textAlign: 'center' }}>
               <Typography variant="h6" sx={{ fontWeight: 800, color: '#ffffff' }}>LATEST TRENDS</Typography>
-              <Box sx={{ mb: 1 }}><Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }}>SHOP NOW</Button></Box>
+              <Box sx={{ mb: 1 }}>
+                <Button size="small" variant="contained" sx={{ bgcolor: '#000000', color: '#ffffff', fontSize: '0.7rem' }} onClick={() => handleShopNow({ title: 'LATEST TRENDS', desc: 'LATEST TRENDS', price: 1599, img: ManFor })}>
+                  SHOP NOW
+                </Button>
+              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -237,7 +277,11 @@ const LandingPage = () => {
           <Typography sx={{ color: '#333333', mb: 3, fontWeight: 600, letterSpacing: '1px' }}>
             Fun styles for kids
           </Typography>
-          <Box><Button variant="outlined" sx={pillButtonStyle}>SHOP NOW</Button></Box>
+          <Box>
+            <Button variant="outlined" sx={pillButtonStyle} onClick={() => handleShopNow({ title: 'Kids - Fun styles', desc: 'Fun styles for kids', price: 999, img: ManFive })}>
+              SHOP NOW
+            </Button>
+          </Box>
         </Box>
       </Container>
 
@@ -276,7 +320,12 @@ const LandingPage = () => {
                   <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: 800, fontSize: '0.9rem', mb: 1, textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>
                     {item.category}
                   </Typography>
-                  <Button variant="contained" size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: '#ffffff', fontSize: '0.65rem', fontWeight: 700, borderRadius: '20px' }}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ bgcolor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: '#ffffff', fontSize: '0.65rem', fontWeight: 700, borderRadius: '20px' }}
+                    onClick={() => handleShopNow({ title: item.category, desc: item.category, price: 1299, img: item.img })}
+                  >
                     SHOP NOW
                   </Button>
                 </Box>
@@ -324,7 +373,12 @@ const LandingPage = () => {
                     <Typography sx={{ textDecoration: 'line-through', color: '#999999', fontSize: '0.75rem' }}>₹{prod.oldPrice}</Typography>
                     <Typography sx={{ color: '#dc2626', fontWeight: 700, fontSize: '0.75rem' }}>{prod.discount}</Typography>
                   </Box>
-                  <Chip label="Buy 1 Get 1" size="small" sx={{ mt: 1, bgcolor: '#000000', color: '#ffffff', borderRadius: '4px', fontSize: '0.65rem', height: 20 }} />
+                  <Chip
+                    label="Buy 1 Get 1"
+                    size="small"
+                    onClick={() => handleBuy1Get1(prod)}
+                    sx={{ mt: 1, bgcolor: '#000000', color: '#ffffff', borderRadius: '4px', fontSize: '0.65rem', height: 20, cursor: 'pointer' }}
+                  />
                 </CardContent>
               </Card>
             </Grid>

@@ -40,21 +40,27 @@ export const WishlistProvider = ({ children }) => {
 
   const addToCartFromLanding = (product) => {
     setCartItems((prevItems) => {
-      const exists = prevItems.find((item) => item.title === product.title);
+      // Use a stable identifier for products: prefer title, fall back to desc or brand+desc
+      const productKey = product.title || product.desc || `${product.brand || ''}-${product.desc || ''}`;
+
+      const exists = prevItems.find((item) => (item.title || item.desc) === productKey);
 
       if (exists) {
         return prevItems.map((item) =>
-          item.title === product.title ? { ...item, quantity: item.quantity + 1 } : item
+          (item.title || item.desc) === productKey ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
 
       return [
         ...prevItems,
         {
-          ...product,
-          currentPrice: product.price || 1499,
-          size: 'Free Size',
-          quantity: 1,
+          // normalize stored product fields
+          title: product.title || product.desc || `${product.brand || ''} ${product.desc || ''}`,
+          desc: product.desc || product.title || '',
+          img: product.img,
+          currentPrice: product.price ? Number(product.price) : 1499,
+          size: product.size || 'Free Size',
+          quantity: product.quantity || 1,
         },
       ];
     });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Box, Chip, Typography, Button } from '@mui/material';
+import { useWishlist } from './wishlistcontext';
 
 const SLIDE_DATA = [
   {
@@ -39,6 +40,8 @@ const pillButtonStyle = {
 
 export default function AutoPlayCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const { addToCartFromLanding } = useWishlist();
 
   // ⏱️ Auto-play logic block
   useEffect(() => {
@@ -113,7 +116,13 @@ export default function AutoPlayCarousel() {
           <Typography variant="h6" sx={{ color: '#333333', mb: 3, fontWeight: 500, fontSize: { xs: '0.9rem', md: '1.2rem' } }}>
             {currentSlide.subtitle}
           </Typography>
-          <Button variant="outlined" sx={pillButtonStyle}>SHOP NOW</Button>
+          <Button
+            variant="outlined"
+            sx={pillButtonStyle}
+            onClick={() => addToCartFromLanding({ title: currentSlide.id, desc: currentSlide.title, price: 1499, img: currentSlide.image })}
+          >
+            SHOP NOW
+          </Button>
         </Box>
 
         {/* Carousel Dot Indicators */}
