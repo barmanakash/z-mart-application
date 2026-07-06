@@ -102,7 +102,7 @@ const Navbar = () => {
                   LOGIN / SIGN UP
                 </Button>
                 <Divider sx={{ mb: 2 }} />
-                <Typography sx={menuLinkStyle}>My Account</Typography>
+                <Typography onClick={() => navigate('/accountpage')} sx={menuLinkStyle}>My Account</Typography>
                 <Typography sx={menuLinkStyle}>Orders</Typography>
                 <Typography sx={menuLinkStyle}>Saved Addresses</Typography>
                 <Typography sx={menuLinkStyle}>Coupons</Typography>

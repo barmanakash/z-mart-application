@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import Navbar from './components/Navbar';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import Footer from './components/footer';
 import LoginPage from './components/loginpage';
 import LandingPage from './components/LandingPage';
@@ -32,6 +33,7 @@ import Wishlist from './components/wishlist';
 import { WishlistProvider } from './components/wishlistcontext';
 import AIChatbot from './components/aichatbot';
 import SignUp from './components/signup';
+import Account from './components/account';
 
 function App() {
   return (
@@ -51,6 +53,14 @@ function App() {
             <>
               <Container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }}>
                 <Cart />
+              </Container>
+              <Footer />
+            </>
+          } />
+          <Route path="/checkout" element={
+            <>
+              <Container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }}>
+                <Checkout />
               </Container>
               <Footer />
             </>
@@ -267,7 +277,7 @@ function App() {
             </>
           } />
 
-           <Route path='/signuppage' element={
+          <Route path='/signuppage' element={
             <>
               <container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }} >
                 <SignUp />
@@ -276,8 +286,17 @@ function App() {
             </>
           } />
 
+          <Route path='/accountpage' element={
+            <>
+              <container maxWidth="xl" sx={{ mt: 4, mb: 4, minHeight: '80vh' }} >
+                <Account />
+              </container>
+              <Footer />
+            </>
+          } />
+
         </Routes>
-        <AIChatbot/>
+        <AIChatbot />
       </Router>
     </WishlistProvider>
 

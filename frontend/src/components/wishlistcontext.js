@@ -64,6 +64,10 @@ export const WishlistProvider = ({ children }) => {
     setCartItems((prevItems) => prevItems.filter((_, index) => index !== indexToRemove));
   };
 
+  const clearCartContext = () => {
+    setCartItems([]);
+  };
+
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -75,6 +79,7 @@ export const WishlistProvider = ({ children }) => {
         cartItems,              
         addToCartFromLanding,   
         removeFromCartContext,  
+        clearCartContext,       
         totalQuantity           
       }}
     >
