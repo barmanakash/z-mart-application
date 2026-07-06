@@ -5,24 +5,33 @@ import {
     Container,
     Breadcrumbs,
     Link,
-    Card,
-    CardContent,
-    Divider,
     Button,
     TextField
 } from '@mui/material';
-import React from 'react';
-
+import React, { useState } from 'react';
 
 function Map() {
+    const [locationQuery, setLocationQuery] = useState('Jabalpur, Madhya Pradesh');
+    const [mapUrl, setMapUrl] = useState(
+        'https://www.google.com/maps?q=Jabalpur,+Madhya+Pradesh&output=embed'
+    );
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const trimmedQuery = locationQuery.trim();
+        if (!trimmedQuery) {
+            return;
+        }
+
+        const encodedQuery = encodeURIComponent(trimmedQuery);
+        setMapUrl(`https://www.google.com/maps?q=${encodedQuery}&output=embed`);
+    };
 
     const firstPage = () => {
         return (
             <StyleBox>
                 <Box>
-
                     <Container maxWidth="lg" sx={{ py: 4, fontFamily: 'sans-serif' }}>
-
                         {/* Breadcrumbs Navigation */}
                         <Box sx={{ mb: 2 }}>
                             <Breadcrumbs separator=">" aria-label="breadcrumb" sx={{ fontSize: '0.85rem' }}>
@@ -30,29 +39,34 @@ function Map() {
                                     Home
                                 </Link>
                                 <Typography color="text.primary" sx={{ fontSize: '0.85rem' }}>
-                                    store Locator
+                                    Store Locator
                                 </Typography>
                             </Breadcrumbs>
                         </Box>
-                        <Typography>Search Location*</Typography>
-                        <Box className="textfield">
+
+                        <Typography sx={{ mb: 1, fontWeight: 700 }}>Search Location*</Typography>
+
+                        <Box component="form" onSubmit={handleSearch} className="textfield">
                             <TextField
                                 type="text"
                                 className="inputfield"
+                                placeholder="Enter city, store, or landmark"
+                                value={locationQuery}
+                                onChange={(event) => setLocationQuery(event.target.value)}
+                                inputProps={{ 'aria-label': 'Search location' }}
                             />
-                            <Button className="btnstyle">
+                            <Button type="submit" className="btnstyle">
                                 Find Stores
                             </Button>
                         </Box>
                     </Container>
-
                 </Box>
                 <Box>
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117371.0620145914!2d79.88635074315827!3d23.175831479477598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3981ae1a0fb6a97d%3A0x44020616bc43e3b9!2sJabalpur%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1780039344176!5m2!1sen!2sin"
+                        src={mapUrl}
                         width="900"
                         height="500"
-                        style={{ border: 0 }}
+                        style={{ border: 0, maxWidth: '100%' }}
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
@@ -60,12 +74,10 @@ function Map() {
                     ></iframe>
                 </Box>
             </StyleBox>
-        )
-    }
+        );
+    };
 
-    return (
-        <>{firstPage()}</>
-    )
+    return <>{firstPage()}</>;
 }
 
 export default Map;
